@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ocr-mac}",
+            "name": "Debug OCRMac",
+            "target": "OCRMac",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug OCRMac"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:ocr-mac}",
+            "name": "Release OCRMac",
+            "target": "OCRMac",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release OCRMac"
+        }
+    ]
+}
