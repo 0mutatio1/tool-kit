@@ -5,15 +5,17 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
-    <string>OCRMac</string>
+    <string>ToolKit</string>
     <key>CFBundleExecutable</key>
-    <string>OCRMac</string>
+    <string>toolKit</string>
     <key>CFBundleIdentifier</key>
-    <string>com.local.ocrmac</string>
+    <string>com.local.toolkit</string>
+    <key>CFBundleIconFile</key>
+    <string>toolKit</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>OCRMac</string>
+    <string>ToolKit</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>

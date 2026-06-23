@@ -5,20 +5,20 @@
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:ocr-mac}",
-            "name": "Debug OCRMac",
-            "target": "OCRMac",
+            "name": "Debug toolKit",
+            "target": "toolKit",
             "configuration": "debug",
-            "preLaunchTask": "swift: Build Debug OCRMac"
+            "preLaunchTask": "swift: Build Debug toolKit"
         },
         {
             "type": "swift",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:ocr-mac}",
-            "name": "Release OCRMac",
-            "target": "OCRMac",
+            "name": "Release toolKit",
+            "target": "toolKit",
             "configuration": "release",
-            "preLaunchTask": "swift: Build Release OCRMac"
+            "preLaunchTask": "swift: Build Release toolKit"
         }
     ]
 }

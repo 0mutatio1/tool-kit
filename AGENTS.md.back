@@ -1,0 +1,86 @@
+# AGENT.md
+
+
+## Agent Rules
+
+- Read and follow `CLAUDE.md` before making code changes.
+
+## Project overview
+
+`toolKit` is a native macOS utility built with SwiftUI, AppKit, Vision, and CoreGraphics.
+
+## Current architecture
+
+- `Sources/toolKit/App` — app entry
+- `Sources/toolKit/Views` — SwiftUI views
+- `Sources/toolKit/ViewModels` — UI state and orchestration
+- `Sources/toolKit/Services` — screen capture, selection overlay, OCR, clipboard, permissions
+- `Sources/toolKit/Models` — shared data models
+- `Tests/toolKitTests` — service-level SwiftPM tests
+
+## Current feature scope
+
+- Select and capture a screen region across one or more connected displays
+- Adjust the selected region before capture with a blue bordered selection, resize handles, size label, and bottom toolbar
+- Annotate the selected region in the overlay with move, rectangle, arrow, pencil, marker, a combined privacy brush with blur/mosaic options, text, undo, redo, delete, and selected-annotation color controls
+- Select, move, resize, delete, and double-click text annotations to edit their content before export
+- Capture copies the current selected area with annotations and closes the clip overlay
+- Pin captures the current selected area with annotations, opens a movable floating pinned image, and keeps the clip overlay open
+- Pinned images keep screen-scale resolution, show controls on hover/selection, support selected-state Escape close, keyboard/pinch zoom, context menu copy/save/OCR/close, and remain movable while clipping stays active
+- OCR captures the current selected area with annotations, keeps the clip overlay open, and shows a compact result panel beside the clip
+- Automatically log text and image copies on the Mac while clipboard monitoring is enabled, and store OCR/JSON copies in a persistent searchable copy history with type filtering, full-text/image preview, metadata, copy/delete actions, JSON-to-editor reuse, configurable retention, and image size limits
+- On-device OCR only
+- English, Simplified Chinese, and Traditional Chinese recognition
+- Show OCR results in a standalone popup window
+- Main navigation uses a collapsible left sidebar for Clip OCR, JSON Formatter, Cron, Diff, Copy History, and Settings
+- The macOS menu bar icon can reopen the app, start clipping, show Copy History or Settings, pause/resume clipboard monitoring, and quit explicitly
+- Global clip hotkey: `⌃⌥⌘C`
+
+### Json Formatter
+- Use `https://github.com/josdejong/jsoneditor` to format json text
+- JSON Formatter uses two separate jsoneditor panes: Left and Right
+- Each editor is independent and has its own separate actions 
+- Removed the scroll wrapper from the JSON view so the editors can resize with the current content area.
+- The editors should fill the available height and respond to window resizing.
+- Layout stays side-by-side on wide windows and stacks on narrow windows.
+
+### Cron 
+- Cron generates standard 5-field cron expressions for interval, hourly, daily, weekly, and monthly schedules
+- Cron decoder explains existing expressions and shows upcoming execution times
+- Cron expressions can be copied from the app
+
+### Diff
+- Diff compares two text blocks side-by-side
+- Diff result highlights inserted, deleted, and changed lines
+- Changed rows highlight only the changed character span where possible
+- Diff tools support paste, swap, compare, clear, and copy summary
+
+### Settings
+- Settings are persisted in `UserDefaults`
+- Settings control launch at login, hide-to-menu-bar after close, default clip save location, clipboard monitoring, copy history retention, image history max size, and OCR language mode
+- Clipboard monitoring can be paused from Settings or the menu bar; paused monitoring does not record external clipboard changes, while app-generated OCR/JSON copies still enter history
+
+## Build and run
+
+- Build: `swift build`
+- Test: `swift test`
+- Run: `swift run`
+- run Package app bundle: `zsh Scripts/package_app.sh` everytime after finishing coding
+
+## Important constraints
+
+- Requires macOS 14+
+- Screen clipping functionality is granted screen recording permissions by default
+- Screen clipping supports external monitors and can select regions across available displays
+- Starting a clip from the hotkey opens non-activating overlay panels on all displays without forcing focus back to the main app window
+- Releasing the mouse after drawing a clip keeps the selection editable; capture with the toolbar checkmark, Return, or double-click inside the selection
+- During clip selection and initial capture, regular app windows are temporarily hidden so the snip image contains the underlying content
+- Clipping uses the custom selection overlay as the only clip UI; annotations are composited onto the captured bitmap before copy, pin, or OCR
+- Pin and export output should match the selected screen content orientation and resolution
+- Clip OCR and pinned image windows should not force focus back to the main app window
+- Closing the main window hides ToolKit to the menu bar by default; Settings can change this behavior, and the menu bar Quit action always terminates the app
+- Closing the result popup does not quit the app; the app keeps running in the background and can be reopened
+- OCR is implemented with Apple Vision plus image preprocessing and dedicated Chinese-friendly recognition passes
+- The main UI uses a collapsible left sidebar instead of top tabs
+- JSON formatter that accepts raw JSON, markdown code fences, and some stringified JSON
+- The packaged app is created at `dist/toolKit.app`

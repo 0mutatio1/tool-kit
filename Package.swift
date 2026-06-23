@@ -2,17 +2,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "OCRMac",
+    name: "toolKit",
     platforms: [
         .macOS(.v14)
     ],
     products: [
-        .executable(name: "OCRMac", targets: ["OCRMac"])
+        .executable(name: "toolKit", targets: ["toolKit"])
     ],
     targets: [
         .executableTarget(
-            name: "OCRMac",
-            path: "Sources/OCRMac"
+            name: "toolKit",
+            path: "Sources/toolKit"
+        ),
+        .testTarget(
+            name: "toolKitTests",
+            dependencies: ["toolKit"],
+            path: "Tests/toolKitTests"
         )
     ]
 )

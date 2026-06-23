@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="$ROOT_DIR/.build"
-PRODUCT_NAME="OCRMac"
+PRODUCT_NAME="toolKit"
 APP_NAME="$PRODUCT_NAME.app"
 BUNDLE_DIR="$ROOT_DIR/dist/$APP_NAME"
 CONTENTS_DIR="$BUNDLE_DIR/Contents"
@@ -36,6 +36,7 @@ rm -rf "$BUNDLE_DIR"
 mkdir -p "$MACOS_DIR" "$RESOURCES_DIR"
 cp "$BIN_PATH" "$MACOS_DIR/$PRODUCT_NAME"
 cp "$PLIST_TEMPLATE" "$CONTENTS_DIR/Info.plist"
+cp "$ROOT_DIR/AppBundle/toolKit.icns" "$RESOURCES_DIR/toolKit.icns"
 
 /usr/bin/touch "$BUNDLE_DIR"
 /usr/bin/codesign --force --deep --sign - "$BUNDLE_DIR" >/dev/null 2>&1 || true
